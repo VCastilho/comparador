@@ -1,0 +1,149 @@
+<!doctype>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        * {
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {display: block; margin: auto;}
+        article {
+            position: relative;
+            display: inline-block;
+      width: 280px;
+      height: 200px;
+        }
+        aside {
+            height: 200px;
+            max-width: 260px;
+            font-size: 3.2rem;
+            font-weight: bold;
+            line-height: 200px;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        aside#left {
+            text-align: right;
+            padding-right: 2rem;
+        }
+        aside#right {
+            text-align: left;
+            padding-left: 2rem;
+        }
+
+        .img-comp-container {
+            height: 200px;
+            min-width: 820px;
+            position: relative;
+            text-align: center;
+        }
+
+        .img-comp-img {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            position: absolute;
+        }
+
+        .img-comp-img img {
+            display: block;
+            vertical-align: middle;
+        }
+
+        .img-comp-slider {
+            position: absolute;
+            z-index: 9;
+            cursor: ew-resize;
+            width: 24px;
+            height: 24px;
+            background-image: url("http://images.tcdn.com.br/678962/themes/37/img/clicker1.png?325.80026377726244");
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="initComparisons()">Centralizar ajustes</button>
+    <div class="img-comp-container">
+        <aside id="left">Antes</aside>
+        <article>
+            <div class="img-comp-img ">
+            <img src="https://www.lupadigital.info/wp-content/uploads/2018/05/imagens-gratis.jpg" width="280" height="200" alt=""/> </div>
+            <div class="img-comp-img img-comp-overlay">
+            <img src="http://s2.glbimg.com/7B_srQyXERP_NoJCHSzgOnuwsyc=/smart/e.glbimg.com/og/ed/f/original/2017/07/26/best-sapce-photos-2017-designboom-10.jpg" width="280" height="200" alt=""/> </div>
+        </article>
+        <aside id="right">Depois</aside>
+    </div>
+
+    <script>
+        slider = document.createElement("DIV");
+        slider.setAttribute("class", "img-comp-slider");
+        console.log(getId('right'));
+        getId('right').style.width = getId('left').offsetWidth;
+
+        function initComparisons() {
+            var x, i, c, cc;
+            getId('left').style.color = "#808080";
+            getId('right').style.color = "#808080";
+            x = document.getElementsByClassName("img-comp-overlay");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.width = "300px";
+                compareImages(x[i]);
+            }
+            function compareImages(img) {
+                var clicked = 0,
+                    w = img.offsetWidth,
+                    h = img.offsetHeight;
+                img.style.width = (w / 2) + "px";
+                img.parentElement.insertBefore(slider, img);
+                img.parentElement.style.width = w;
+                img.parentElement.style.height = h;
+                slider.style.top = (h / 1) - (slider.offsetHeight / 2) + "px";
+                slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+                slider.addEventListener("mousedown", slideReady);
+                window.addEventListener("mouseup", slideFinish);
+                slider.addEventListener("touchstart", slideReady);
+                window.addEventListener("touchstop", slideFinish);
+                function slideReady(e) {
+                    e.preventDefault();
+                    clicked = 1;
+                    window.addEventListener("mousemove", slideMove);
+                    window.addEventListener("touchmove", slideMove);
+                }
+                function slideFinish() {
+                    clicked = 0;
+                }
+                function slideMove(e) {
+                    var pos;
+                    if (clicked == 0) return false;
+                    pos = getCursorPos(e)
+                    if (pos < 0) pos = 0;
+                    if (pos > w) pos = w;
+                    slide(pos);
+                }
+                function getCursorPos(e) {
+                    var a, x = 0;
+                    e = e || window.event;
+                    a = img.getBoundingClientRect();
+                    x = e.pageX - a.left;
+                    x = x - window.pageXOffset;
+                    return x;
+                }
+                function slide(x) {
+                    c = 225 * x / w;
+                    cc = 225 - c;
+                    getId('right').style.color = "rgb("+c+','+c+','+c+")";
+                    getId('left').style.color = "rgb("+cc+','+cc+','+cc+")";
+                    img.style.width = x + "px";
+                    slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+                }
+            }
+        }
+
+        function getId(ref) {
+            return document.getElementById(ref);
+        }
+        initComparisons();
+    </script>
+</body>
+</html>
