@@ -1,0 +1,53 @@
+    * {
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        #botaocp {display: block; margin: auto;}
+        #articlecp {
+            position: relative;
+            display: inline-block;
+			 width: 280px;
+      height: 200px;
+        }
+        aside {
+            height: 200px;
+            max-width: 260px;
+            font-size: 3.2rem;
+            font-weight: bold;
+            line-height: 200px;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        aside#left {
+            text-align: right;
+            padding-right: 2rem;
+        }
+        aside#right {
+            text-align: left;
+            padding-left: 2rem;
+        }
+        .img-comp-container {
+            height: 200px;
+            min-width: 820px;
+            position: relative;
+            text-align: center;
+        }
+        .img-comp-img {
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            position: absolute;
+        }
+        .img-comp-img img {
+            display: block;
+            vertical-align: middle;
+        }
+        .img-comp-slider {
+            position: absolute;
+            z-index: 9;
+            cursor: ew-resize;
+            width: 24px;
+            height: 24px;
+            background-image: url("http://images.tcdn.com.br/678962/themes/37/img/clicker1.png?325.80026377726244");
+            opacity: 1;
+        }
